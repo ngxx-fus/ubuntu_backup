@@ -12,8 +12,8 @@ sudo apt update -y
 sudo apt upgrade -y
 
 ########### gedit #############
-printf "\nInstalling gedit...\n"
-sudo snap install gedit
+#printf "\nInstalling gedit...\n"
+#sudo snap install gedit
 
 ######### gnome-tweaks #######
 printf "\nInstall gnome-tweaks...\n"
@@ -37,4 +37,10 @@ printf "\nInstall flatpak...\n"
 sudo apt install flatpak -y
 sudo apt install gnome-software-plugin-flatpak -y
 sudo flatpak remote-add --if-not-exists flathub https://dl.flathub.org/repo/flathub.flatpakrepo
+
+############ obs ############
+printf "\nInstalling OBS...\n"
+sudo add-apt-repository ppa:obsproject/obs-studio
+sudo apt update
+sudo apt install ffmpeg obs-studio
 

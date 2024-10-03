@@ -44,3 +44,9 @@ sudo add-apt-repository ppa:obsproject/obs-studio
 sudo apt update
 sudo apt install ffmpeg obs-studio
 
+########### python ##########
+#venv for python3 
+sudo apt install python3-venv 
+
+#python is python3 
+sudo apt install python-is-python3

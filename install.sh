@@ -83,7 +83,7 @@ sshpass -p "$password" sudo apt update -y
 sshpass -p "$password" sudo apt upgrade -y
 
 ########### gedit #############
-#printf "\ne[96mInstalling gedit...\e[0m\n"
+#printf "\ne[96mInstall gedit...\e[0m\n"
 #sshpass -p "$password" sudo snap install gedit
 
 printf "\n\e[96mInstall git\e[0m\n"
@@ -114,13 +114,13 @@ sshpass -p "$password" sudo apt install gnome-software-plugin-flatpak -y
 sshpass -p "$password" sudo flatpak remote-add --if-not-exists flathub https://dl.flathub.org/repo/flathub.flatpakrepo
 
 ############ obs ############
-printf "\n\e[96mInstalling OBS...\e[0m\n"
+printf "\n\e[96mInstall OBS...\e[0m\n"
 sshpass -p "$password" sudo add-apt-repository ppa:obsproject/obs-studio -y
 sshpass -p "$password" sudo apt update  -y
 sshpass -p "$password" sudo apt install ffmpeg obs-studio  -y
 
 ########### python ##########
-printf "\n\e[96mInstalling python3-venv pkg...\e[0m\n"
+printf "\n\e[96mInstall python3-venv pkg...\e[0m\n"
 #venv for python3 
 sshpass -p "$password" sudo apt install python3-venv  -y
 
@@ -129,19 +129,19 @@ printf "\n\e[96mInstall python-is-python3 pkg...\e[0m\n\n"
 sshpass -p "$password" sudo apt install python-is-python3  -y
 
 #oh-my-posh
-printf "\n\e[96mInstalling oh-my-posh\e[0m\n"
+printf "\n\e[96mInstall oh-my-posh\e[0m\n"
 curl -s https://ohmyposh.dev/install.sh | bash -s 
 
 #duf
-prinf "\n\e[96mInstalling duf\e[0m\n"
+prinf "\n\e[96mInstall duf\e[0m\n"
 sshpass -p "$password" sudo apt install duf  -y
 
 #neofetch
-printf "\n\e[96mInstalling neofetch...\e[0m\n"
+printf "\n\e[96mInstall neofetch...\e[0m\n"
 sshpass -p "$password" sudo apt install duf  -y
 
 #vlc
-printf "\n\e[96mInstalling vlc...\e[0m\n"
+printf "\n\e[96mInstall vlc...\e[0m\n"
 sshpass -p "$password" sudo apt install vlc -y
 
 printf "\n\e[96mCopying custom theme into $USER dir...\e[0m\n"
@@ -150,6 +150,9 @@ if [ -d "~/.OH-MY-POSH" ]; then
 else
     printf "\e[91mFile existed -> aborted! \e[0m\n"
 fi
+
+printf "\n\e[96mCopying custom fonts ...\e[0m\n"
+sshpass -p "$password" sudo cp -rf ./fonts /usr/share/fonts/truetype
 
 printf "\n\e[96mAdding Initial_Script alias ~/.bashrc\e[0m\n"
 echo "$(cat ./bash/alias)" >> ~/.bashrc

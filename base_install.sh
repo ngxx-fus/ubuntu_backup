@@ -60,3 +60,11 @@ sudo apt install duf
 #neofetch
 printf "\nInstalling neofetch...\n"
 sudo apt install duf
+
+printf "\nInstalling oh-my-posh\n"
+curl -s https://ohmyposh.dev/install.sh | bash -s
+
+printf "\nAdding Initial_Script into .bashrc
+
+
+printf "\n\n--------------------- DONE! ---------------------\n\n" 

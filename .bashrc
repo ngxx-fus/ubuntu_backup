@@ -124,7 +124,7 @@ if ! shopt -oq posix; then
 fi
 
 ################# Custom Downloads Folder  ######################
-alias downloads='cd /mnt/sda2/LINUX_DOWNLOADS'
+alias linuxdownloads='cd /mnt/sda2/LINUX_DOWNLOADS'
 alias data='cd /mnt/sda2'
 alias doc='cd /mnt/sda2/DOC'
 
@@ -140,8 +140,14 @@ alias venv_bin='cd /mnt/sda2/VENV/venv/bin'
 alias venv_activae='source /mnt/sda2/VENV/venv/bin/activate'
 alias venv_dir='cd /mnt/sda2/VENV/venv'
 
-alias gclone='git clone'
-alias gpush='git push'
-alias gaddall='git add -A'
-alias gcommit='git commit'
-alias gcommitmsg='git commit -m {$1}'
+alias clone='git clone'
+alias push='git push'
+alias addall='git add -A'
+alias commit='git commit'
+alias commitmsg='git commit -m {$1}'
+
+alias downloads="cd ~/Downloads";
+alias desktop="cd ~/Desktop";
+alias nanobashrc="sudo nano ~/.bashrc"
+alias update="sudo apt update"
+alias upgrade="sudo apt upgrade"

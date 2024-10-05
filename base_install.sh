@@ -41,28 +41,33 @@ sudo flatpak remote-add --if-not-exists flathub https://dl.flathub.org/repo/flat
 ############ obs ############
 printf "\nInstalling OBS...\n"
 sudo add-apt-repository ppa:obsproject/obs-studio
-sudo apt update
-sudo apt install ffmpeg obs-studio
+sudo apt update  -y
+sudo apt install ffmpeg obs-studio  -y
 
 ########### python ##########
 printf "\nInstalling python3-venv pkg...\n"
 #venv for python3 
-sudo apt install python3-venv 
+sudo apt install python3-venv  -y
 
 #python is python3 
 printf "\nInstall python-is-python3 pkg...\n"
-sudo apt install python-is-python3
+sudo apt install python-is-python3  -y
 
 #duf
 prinf "\nInstalling duf\n"
-sudo apt install duf
+sudo apt install duf  -y
 
 #neofetch
 printf "\nInstalling neofetch...\n"
-sudo apt install duf
+sudo apt install duf  -y
 
+#vlc
+printf "\nInstalling vlc...\n"
+sudo apt install vlc -y
+
+#oh-my-póh
 printf "\nInstalling oh-my-posh\n"
-curl -s https://ohmyposh.dev/install.sh | bash -s
+curl -s https://ohmyposh.dev/install.sh | bash -s 
 
 printf "\nAdding Initial_Script into .bashrc
 

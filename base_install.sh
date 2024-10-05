@@ -45,8 +45,18 @@ sudo apt update
 sudo apt install ffmpeg obs-studio
 
 ########### python ##########
+printf "\nInstalling python3-venv pkg...\n"
 #venv for python3 
 sudo apt install python3-venv 
 
 #python is python3 
+printf "\nInstall python-is-python3 pkg...\n"
 sudo apt install python-is-python3
+
+#duf
+prinf "\nInstalling duf\n"
+sudo apt install duf
+
+#neofetch
+printf "\nInstalling neofetch...\n"
+sudo apt install duf

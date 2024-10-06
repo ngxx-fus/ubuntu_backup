@@ -109,7 +109,7 @@ sshpass -p "$password" sudo apt install gnome-shell-extension-manager -y
 
 ########## flatpak ###########
 printf "\n\e[96mInstall flatpak...\e[0m\n"
-sshpass -p "$password" sudo apt install flatpak -y
+sshpass -pm viết bài này, 6 kiến ​​trúc chính (arm "$password" sudo apt install flatpak -y
 sshpass -p "$password" sudo apt install gnome-software-plugin-flatpak -y
 sshpass -p "$password" sudo flatpak remote-add --if-not-exists flathub https://dl.flathub.org/repo/flathub.flatpakrepo
 

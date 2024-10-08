@@ -6,13 +6,20 @@ source ./resources/Support_Functions.sh
 #################################### main script ####################################
 printf "${LIGHT_YELLOW}Clear screen... ${NORMAL}"
 clear;
-printf "\e[92m\n\n--------- Build Kernel for RPi4 ---------\n\n${NORMAL}"
-check_sshpass_neofetch;
+# check_sshpass_neofetch;
 
 password=""
 read -s -p "Enter your password: " password
 
-printf "${LIGHT_YELLOW}\nHost informations: ${NORMAL}"
+printf "\e[92m\n Force run: ${BOLD} update, upgrade${NORMAL}\n"
+sshpass -p "$password" sudo apt update -y
+sshpass -p "$password" sudo apt upgrade -y
+
+printf "\e[92m\n Force install: ${BOLD}sshpasss, neofetch${NORMAL}\n"
+sshpass -p "$password" sudo apt install sshpass -y
+sshpass -p "$password" sudo apt install  neofetch -y
+
+printf "\n${LIGHT_YELLOW}\nHost informations: ${NORMAL}"
 sshpass -p "$password" sudo neofetch
 
 printf "${LIGHT_YELLOW}\nTarget informations: ${NORMAL}"
@@ -30,6 +37,9 @@ yes_or_no;
 
 printf "\n${LIGHT_YELLOW}Installing \e[1mbc bison flex libssl-dev make libc6-dev libncurses5-dev${NORMAL}\n"
 sshpass -p "$password" sudo apt install bc bison flex libssl-dev make libc6-dev libncurses5-dev
+
+sshpass -p "$password" sudo apt update -y
+sshpass -p "$password" sudo apt upgrade -y
 
 printf "\n${LIGHT_YELLOW}Installing \e[1mthe 64-bit toolchain to build a 64-bit kernel${NORMAL}\n"
 sshpass -p "$password" sudo apt install crossbuild-essential-arm64
@@ -53,6 +63,8 @@ fi
 
 if [ $skip_clone_linux_repo -eq 0 ]
 then
+    printf "\n${LIGHT_YELLOW}Wait 5-seconds before Cloning ${BOLD}raspberrypi/linux${NORMAL}\n"
+    sleep 5s
     printf "${LIGHT_YELLOW}Cloning ${BOLD}raspberrypi/linux${NORMAL}${LIGHT_YELLOW} branch=${BRANCH}${NORMAL}\n"
     git clone --depth=1 --branch ${BRANCH} https://github.com/raspberrypi/linux
 fi
@@ -60,26 +72,19 @@ fi
 printf "${LIGHT_YELLOW}Jumping into ${BOLD}./linux${NORMAL}\n"
 cd ./linux
 
-printf "${LIGHT_YELLOW}Wait 5-seconds before open ${BOLD}menu-config${NORMAL}\n"
-printf "${LIGHT_YELLOW}NOTE:${NORMAL} You can config the ${BOLD}menu-config${NORMAL} to make the kernel for yourself.\n"
-sleep 5s
-make menuconfig
-
-printf "${LIGHT_YELLOW}Jumping into ${BOLD}./linux${NORMAL}\n"
-cd ./linux
-
 printf "${LIGHT_YELLOW}Wait 5-seconds before starting open ${BOLD}menu-config${NORMAL}\n"
-printf "${LIGHT_YELLOW}NOTE:${NORMAL} You can config the ${BOLD}menu-config${NORMAL} to make the kernel for yourself.\n"
+printf "${LIGHT_YELLOW}NOTE:${NORMAL} You can config in the ${BOLD}menu-config${NORMAL} to make the kernel for yourself.\n"
 sleep 5s
+KERNEL=kernel8
+make ARCH=arm64 CROSS_COMPILE=aarch64-linux-gnu- bcm2711_defconfig
 make ARCH=arm64 CROSS_COMPILE=aarch64-linux-gnu- menuconfig
 
 printf "${LIGHT_YELLOW}Wait 5-seconds before starting ${BOLD}build kernel${NORMAL}\n"
 sleep 5s
 make -j${CORES}  ARCH=arm64 CROSS_COMPILE=aarch64-linux-gnu- Image modules dtbs
 
-printf "${LIGHT_YELLOW}Wait 5-seconds before starting run ${BOLD}modules_install${NORMAL}\n"
-sudo make -j6 modules_install
-
+# printf "${LIGHT_YELLOW}Wait 5-seconds before starting run ${BOLD}modules_install${NORMAL}\n"
+# sudo make -j6 modules_install
 
 # printf "\n${LIGHT_YELLOW}You must \e[1mmanually copy${NORMAL} kernel into you SDcard!${NORMAL}\n"
 

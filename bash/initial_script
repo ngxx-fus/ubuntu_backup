@@ -1,6 +1,6 @@
 ############### initial script ###############
 export PATH=$PATH:/home/msnp/.local/bin
 eval "$(oh-my-posh init bash --config ~/.OH-MY-POSH/theme.json)"
-export LD_PRELOAD=/opt/Xilinx/14.7/usb-driver/libusb-driver.so
-. /opt/Xilinx/14.7/ISE_DS/settings64.sh
+# export LD_PRELOAD=/opt/Xilinx/14.7/usb-driver/libusb-driver.so
+# . /opt/Xilinx/14.7/ISE_DS/settings64.sh
 clear

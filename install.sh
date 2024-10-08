@@ -16,13 +16,14 @@ password=""
 printf "\e[33mEnter your password: \e[0m"
 read -s password
 
-printf "\e[92m\n Force run: ${BOLD} update, upgrade${NORMAL}\n"
-sudo apt update -y
-sudo apt upgrade -y
+printf "\e[92m\nForce run: ${BOLD} update, upgrade${NORMAL}\n"
+sshpass -p "$password" sudo apt update -y
+sshpass -p "$password" sudo apt upgrade -y
 
-printf "\e[92m\n Force install: ${BOLD}sshpasss, neofetch, curl${NORMAL}\n"
-sudo apt install sshpass -y
-sudo apt install  neofetch -y
+printf "\e[92m\nForce install: ${BOLD}sshpasss, neofetch, curl ${NORMAL}${NORMAL}\n"
+sshpass -p "$password" sudo apt install sshpass -y
+sshpass -p "$password" sudo apt install  neofetch -y
+sshpass -p "$password" sudo apt install  curl -y
 
 # Check are sshpass, neofetch installed?
 # installed_both=''
@@ -156,6 +157,7 @@ printf "\n\e[96mCopying custom theme into $USER dir...\e[0m\n"
 if [ -d "~/.OH-MY-POSH" ]; then
     cp -rf ./OH-MY-POSH/ ~/.OH-MY-POSH
 else
+    cp -rf ./OH-MY-POSH/ ~/.OH-MY-POSH
     printf "\e[91mFile existed -> aborted! \e[0m\n"
 fi
 

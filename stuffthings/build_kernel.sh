@@ -8,19 +8,19 @@ printf "${LIGHT_YELLOW}Clear screen... ${NORMAL}"
 clear;
 # check_sshpass_neofetch;
 
-password=""
-read -s -p "Enter your password: " password
+# password=""
+# read -s -p "Enter your password: " password
 
 printf "\e[92m\n Force run: ${BOLD} update, upgrade${NORMAL}\n"
-sshpass -p "$password" sudo apt update -y
-sshpass -p "$password" sudo apt upgrade -y
+sudo apt update -y
+sudo apt upgrade -y
 
 printf "\e[92m\n Force install: ${BOLD}sshpasss, neofetch${NORMAL}\n"
-sshpass -p "$password" sudo apt install sshpass -y
-sshpass -p "$password" sudo apt install  neofetch -y
+sudo apt install sshpass -y
+sudo apt install  neofetch -y
 
 printf "\n${LIGHT_YELLOW}\nHost informations: ${NORMAL}"
-sshpass -p "$password" sudo neofetch
+sudo neofetch
 
 printf "${LIGHT_YELLOW}\nTarget informations: ${NORMAL}"
 printf "${GRAY}\nCPU:${NORMAL}    Broadcom BCM2711"
@@ -36,13 +36,13 @@ printf "${RED_LIGHT}m\nInstall the build dependencies:\n${NORMAL}"
 yes_or_no;
 
 printf "\n${LIGHT_YELLOW}Installing \e[1mbc bison flex libssl-dev make libc6-dev libncurses5-dev${NORMAL}\n"
-sshpass -p "$password" sudo apt install bc bison flex libssl-dev make libc6-dev libncurses5-dev
+sudo apt install bc bison flex libssl-dev make libc6-dev libncurses5-dev
 
-sshpass -p "$password" sudo apt update -y
-sshpass -p "$password" sudo apt upgrade -y
+sudo apt update -y
+sudo apt upgrade -y
 
 printf "\n${LIGHT_YELLOW}Installing \e[1mthe 64-bit toolchain to build a 64-bit kernel${NORMAL}\n"
-sshpass -p "$password" sudo apt install crossbuild-essential-arm64
+sudo apt install crossbuild-essential-arm64
 
 printf "${RED_LIGHT}m\nBuild configuration\n${NORMAL}"
 yes_or_no;
@@ -53,7 +53,7 @@ if [ -d "linux" ]; then
     printf "\nDo you want to remove it?\n"
     if [ $(get_yes_or_no) -eq 1 ];
     then
-        sshpass -p "$password"  sudo rm -rf ./linux
+         sudo rm -rf ./linux
     else
         skip_clone_linux_repo=1
         printf "\n${RED_LIGHT}mNote:${NORMAL}: Make sure all kernel has been downloaded before!\n"

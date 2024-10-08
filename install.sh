@@ -16,30 +16,38 @@ password=""
 printf "\e[33mEnter your password: \e[0m"
 read -s password
 
-# Check are sshpass, neofetch installed?
-installed_both=''
-printf "\e[33m\nPre-install check:\e[0m\n\tAre you installed both sshpass and neofetch? y/n "
-while true; do
-    read yn
-    case $yn in
-        [Yy]* ) installed_both=1; break;;
-        [Nn]* ) installed_both=0; break;;
-        * ) echo "Please answer correct form!\n";;
-    esac
-done
+printf "\e[92m\n Force run: ${BOLD} update, upgrade${NORMAL}\n"
+sudo apt update -y
+sudo apt upgrade -y
 
-if [ $installed_both -eq 0 ];
-then
-    while true; do
-        printf "\e[33mPre-install:\e[0m\n\tWould you like to install sshpass and neofetch? y/n \e[0m"
-        read yn
-        case $yn in
-            [Yy]* ) sshpass -p "$password" sudo apt install sshpass neofetch -y; break;;
-            [Nn]* ) printf "Abort installtion!\n"; exit;;
-            * ) echo "Please answer correct form!\n";;
-        esac
-    done
-fi
+printf "\e[92m\n Force install: ${BOLD}sshpasss, neofetch, curl${NORMAL}\n"
+sudo apt install sshpass -y
+sudo apt install  neofetch -y
+
+# Check are sshpass, neofetch installed?
+# installed_both=''
+# printf "\e[33m\nPre-install check:\e[0m\n\tAre you installed both sshpass and neofetch? y/n "
+# while true; do
+#     read yn
+#     case $yn in
+#         [Yy]* ) installed_both=1; break;;
+#         [Nn]* ) installed_both=0; break;;
+#         * ) echo "Please answer correct form!\n";;
+#     esac
+# done
+
+# if [ $installed_both -eq 0 ];
+# then
+#     while true; do
+#         printf "\e[33mPre-install:\e[0m\n\tWould you like to install sshpass and neofetch? y/n \e[0m"
+#         read yn
+#         case $yn in
+#             [Yy]* ) sshpass -p "$password" sudo apt install sshpass neofetch -y; break;;
+#             [Nn]* ) printf "Abort installtion!\n"; exit;;
+#             * ) echo "Please answer correct form!\n";;
+#         esac
+#     done
+# fi
 
 #printf "\nChange user to ROOT...\n"
 printf "System print informations via neofetch\n"
@@ -109,7 +117,7 @@ sshpass -p "$password" sudo apt install gnome-shell-extension-manager -y
 
 ########## flatpak ###########
 printf "\n\e[96mInstall flatpak...\e[0m\n"
-sshpass -pm viết bài này, 6 kiến ​​trúc chính (arm "$password" sudo apt install flatpak -y
+sshpass -p "$password" sudo apt install flatpak -y
 sshpass -p "$password" sudo apt install gnome-software-plugin-flatpak -y
 sshpass -p "$password" sudo flatpak remote-add --if-not-exists flathub https://dl.flathub.org/repo/flathub.flatpakrepo
 

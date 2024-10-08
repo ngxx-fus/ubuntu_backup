@@ -11,11 +11,11 @@ clear;
 # password=""
 # read -s -p "Enter your password: " password
 
-printf "\e[92m\n Force run: ${BOLD} update, upgrade${NORMAL}\n"
+printf "\e[92m\nForce run: ${BOLD} update, upgrade${NORMAL}\n"
 sudo apt update -y
 sudo apt upgrade -y
 
-printf "\e[92m\n Force install: ${BOLD}sshpasss, neofetch${NORMAL}\n"
+printf "\e[92m\nForce install: ${BOLD}sshpasss, neofetch${NORMAL}\n"
 sudo apt install sshpass -y
 sudo apt install  neofetch -y
 
@@ -80,8 +80,10 @@ make ARCH=arm64 CROSS_COMPILE=aarch64-linux-gnu- bcm2711_defconfig
 make ARCH=arm64 CROSS_COMPILE=aarch64-linux-gnu- menuconfig
 
 printf "${LIGHT_YELLOW}Wait 5-seconds before starting ${BOLD}build kernel${NORMAL}\n"
-sleep 5s
-make -j${CORES}  ARCH=arm64 CROSS_COMPILE=aarch64-linux-gnu- Image modules dtbs
+CORES=4
+printf "${LIGHT_YELLOW}CORES=$CORES${NORMAL}\n"
+
+make -j4 ARCH=arm64 CROSS_COMPILE=aarch64-linux-gnu- Image modules dtbs
 
 # printf "${LIGHT_YELLOW}Wait 5-seconds before starting run ${BOLD}modules_install${NORMAL}\n"
 # sudo make -j6 modules_install

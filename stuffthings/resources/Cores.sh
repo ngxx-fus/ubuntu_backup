@@ -1,2 +1,3 @@
 #!/bin/bash
-CORES=6
+CORES=4
+# :v

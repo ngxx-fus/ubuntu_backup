@@ -12,18 +12,18 @@ printf "\e[33mNote:\e[0m\n"
 printf "\tDuring the installation, anytime you want to \e[33mabort\e[0m, \n\tjust spam \e[91mctrl+z\e[0m\e[0m\n"
 printf "\tSome app doesn't be installed (e.g chrome, edge)\n"
 
-password=""
-printf "\e[33mEnter your password: \e[0m"
-read -s password
+# password=""
+# printf "\e[33mEnter your password: \e[0m"
+# read -s password
 
 printf "\e[92m\nForce run: ${BOLD} update, upgrade${NORMAL}\n"
-sshpass -p "$password" sudo apt update -y
-sshpass -p "$password" sudo apt upgrade -y
+sudo apt update -y
+sudo apt upgrade -y
 
 printf "\e[92m\nForce install: ${BOLD}sshpasss, neofetch, curl ${NORMAL}${NORMAL}\n"
-sshpass -p "$password" sudo apt install sshpass -y
-sshpass -p "$password" sudo apt install  neofetch -y
-sshpass -p "$password" sudo apt install  curl -y
+sudo apt install sshpass -y
+sudo apt install  neofetch -y
+sudo apt install  curl -y
 
 # Check are sshpass, neofetch installed?
 # installed_both=''
@@ -43,7 +43,7 @@ sshpass -p "$password" sudo apt install  curl -y
 #         printf "\e[33mPre-install:\e[0m\n\tWould you like to install sshpass and neofetch? y/n \e[0m"
 #         read yn
 #         case $yn in
-#             [Yy]* ) sshpass -p "$password" sudo apt install sshpass neofetch -y; break;;
+#             [Yy]* ) sudo apt install sshpass neofetch -y; break;;
 #             [Nn]* ) printf "Abort installtion!\n"; exit;;
 #             * ) echo "Please answer correct form!\n";;
 #         esac
@@ -52,7 +52,7 @@ sshpass -p "$password" sudo apt install  curl -y
 
 #printf "\nChange user to ROOT...\n"
 printf "System print informations via neofetch\n"
-sshpass -p "$password"  sudo neofetch
+ sudo neofetch
 
 printf "\e[33mInstallion list:\e[0m"
 printf "\nexntension-manager"
@@ -88,21 +88,21 @@ done
 
 ######## system update #######
 printf "\n\e[96mUpdate/update system...\e[0m\n"
-sshpass -p "$password" sudo apt update -y
-sshpass -p "$password" sudo apt upgrade -y
+sudo apt update -y
+sudo apt upgrade -y
 
 ########### gedit #############
 #printf "\ne[96mInstall gedit...\e[0m\n"
-#sshpass -p "$password" sudo snap install gedit
+#sudo snap install gedit
 
 printf "\n\e[96mInstall git\e[0m\n"
-sshpass -p "$password" sudo apt install git -y
+sudo apt install git -y
 
 ######### gnome-tweaks #######
 printf "\n\e[96mInstall gnome-tweaks...\e[0m\n"
-sshpass -p "$password" sudo add-apt-repository universe -y 
-sshpass -p "$password" sudo apt install gnome-tweak-tool -y
-sshpass -p "$password" sudo apt search gnome-shell-extension -y
+sudo add-apt-repository universe -y 
+sudo apt install gnome-tweak-tool -y
+sudo apt search gnome-shell-extension -y
 
 ###### disable sync time ######
 # printf "\n\e[96mDisable time-sync...\e[0m\n"
@@ -110,32 +110,32 @@ sshpass -p "$password" sudo apt search gnome-shell-extension -y
 
 ########### sushi ############
 # printf "\n\e[96mInstall gnome-sushi...\e[0m\n"
-# sshpass -p "$password" sudo apt-get install gnome-sushi -y
+# sudo apt-get install gnome-sushi -y
 
 ###### extension manager #####
 # printf "\n\e[96mInstall exntension-manager...\e[0m\n"
-# sshpass -p "$password" sudo apt install gnome-shell-extension-manager -y
+# sudo apt install gnome-shell-extension-manager -y
 
 ########## flatpak ###########
 # printf "\n\e[96mInstall flatpak...\e[0m\n"
-# sshpass -p "$password" sudo apt install flatpak -y
-# sshpass -p "$password" sudo apt install gnome-software-plugin-flatpak -y
-# sshpass -p "$password" sudo flatpak remote-add --if-not-exists flathub https://dl.flathub.org/repo/flathub.flatpakrepo
+# sudo apt install flatpak -y
+# sudo apt install gnome-software-plugin-flatpak -y
+# sudo flatpak remote-add --if-not-exists flathub https://dl.flathub.org/repo/flathub.flatpakrepo
 
 ############ obs ############
 # printf "\n\e[96mInstall OBS...\e[0m\n"
-# sshpass -p "$password" sudo add-apt-repository ppa:obsproject/obs-studio -y
-# sshpass -p "$password" sudo apt update  -y
-# sshpass -p "$password" sudo apt install ffmpeg obs-studio  -y
+# sudo add-apt-repository ppa:obsproject/obs-studio -y
+# sudo apt update  -y
+# sudo apt install ffmpeg obs-studio  -y
 
 ########### python ##########
 printf "\n\e[96mInstall python3-venv pkg...\e[0m\n"
 #venv for python3 
-sshpass -p "$password" sudo apt install python3-venv  -y
+sudo apt install python3-venv  -y
 
 #python is python3 
 printf "\n\e[96mInstall python-is-python3 pkg...\e[0m\n\n"
-sshpass -p "$password" sudo apt install python-is-python3  -y
+sudo apt install python-is-python3  -y
 
 #oh-my-posh
 printf "\n\e[96mInstall oh-my-posh\e[0m\n"
@@ -143,15 +143,15 @@ curl -s https://ohmyposh.dev/install.sh | bash -s
 
 #duf
 prinf "\n\e[96mInstall duf\e[0m\n"
-sshpass -p "$password" sudo apt install duf  -y
+sudo apt install duf  -y
 
 #neofetch
 printf "\n\e[96mInstall neofetch...\e[0m\n"
-sshpass -p "$password" sudo apt install duf  -y
+sudo apt install duf  -y
 
 #vlc
 printf "\n\e[96mInstall vlc...\e[0m\n"
-sshpass -p "$password" sudo apt install vlc -y
+sudo apt install vlc -y
 
 printf "\n\e[96mCopying custom theme into $USER dir...\e[0m\n"
 if [ -d "~/.OH-MY-POSH" ]; then
@@ -162,7 +162,7 @@ else
 fi
 
 printf "\n\e[96mCopying custom fonts ...\e[0m\n"
-sshpass -p "$password" sudo cp -rf ./fonts /usr/share/fonts/truetype
+sudo cp -rf ./fonts /usr/share/fonts/truetype
 
 printf "\n\e[96mAdding Initial_Script alias ~/.bashrc\e[0m\n"
 echo "$(cat ./bash/alias)" >> ~/.bashrc

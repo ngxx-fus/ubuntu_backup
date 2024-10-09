@@ -86,7 +86,7 @@ printf "${LIGHT_YELLOW}CORES=$CORES${NORMAL}\n"
 make -j${CORES} ARCH=arm64 CROSS_COMPILE=aarch64-linux-gnu- Image modules dtbs
 
 printf "${LIGHT_YELLOW}Wait 5-seconds before starting run ${BOLD}modules_install${NORMAL}\n"
-sudo make -j6 modules_install
+sudo make -j${CORES} modules_install
 
 printf "\n${LIGHT_YELLOW}You must \e[1mmanually copy${NORMAL} kernel into you SDcard!${NORMAL}\n"
 

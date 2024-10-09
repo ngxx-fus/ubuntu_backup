@@ -1,2 +1,2 @@
 #!/bin/bash
-CORES=4
+CORES=6

@@ -1,6 +1,7 @@
 #!/bin/bash
-source ./resources/Text_Effects.sh
+source ./resources/Cores.sh
 source ./resources/Branch.sh
+source ./resources/Text_Effects.sh
 source ./resources/Support_Functions.sh
 
 #################################### main script ####################################
@@ -44,19 +45,19 @@ sudo apt upgrade -y
 printf "\n${LIGHT_YELLOW}Installing \e[1mthe 64-bit toolchain to build a 64-bit kernel${NORMAL}\n"
 sudo apt install crossbuild-essential-arm64
 
-printf "${RED_LIGHT}m\nBuild configuration\n${NORMAL}"
+printf "${LIGHT_RED}m\nBuild configuration\n${NORMAL}"
 yes_or_no;
 
 skip_clone_linux_repo=0
 if [ -d "linux" ]; then
-    printf "\n${RED_LIGHT}mError${NORMAL}: \e[1m\"linux\"${NORMAL} has existed!"
+    printf "\n${LIGHT_RED}mError${NORMAL}: \e[1m\"linux\"${NORMAL} has existed!"
     printf "\nDo you want to remove it?\n"
     if [ $(get_yes_or_no) -eq 1 ];
     then
          sudo rm -rf ./linux
     else
         skip_clone_linux_repo=1
-        printf "\n${RED_LIGHT}mNote:${NORMAL}: Make sure all kernel has been downloaded before!\n"
+        printf "\n${LIGHT_RED}mNote:${NORMAL}: Make sure all kernel has been downloaded before!\n"
     fi
 fi
 
@@ -81,14 +82,13 @@ make ARCH=arm64 CROSS_COMPILE=aarch64-linux-gnu- menuconfig
 
 printf "${LIGHT_YELLOW}Wait 5-seconds before starting ${BOLD}build kernel${NORMAL}\n"
 
-CORES=4
 printf "${LIGHT_YELLOW}CORES=$CORES${NORMAL}\n"
+make -j$(CORES) ARCH=arm64 CROSS_COMPILE=aarch64-linux-gnu- Image modules dtbs
 
-make -j4 ARCH=arm64 CROSS_COMPILE=aarch64-linux-gnu- Image modules dtbs
+printf "${LIGHT_YELLOW}Wait 5-seconds before starting run ${BOLD}modules_install${NORMAL}\n"
+sudo make -j6 modules_install
 
-# printf "${LIGHT_YELLOW}Wait 5-seconds before starting run ${BOLD}modules_install${NORMAL}\n"
-# sudo make -j6 modules_install
+printf "\n${LIGHT_YELLOW}You must \e[1mmanually copy${NORMAL} kernel into you SDcard!${NORMAL}\n"
 
-# printf "\n${LIGHT_YELLOW}You must \e[1mmanually copy${NORMAL} kernel into you SDcard!${NORMAL}\n"
+printf "\e[92m\n\n----------------- Done! -----------------\n\n${NORMAL}"
 
-# printf "\e[92m\n\n----------------- Done! -----------------\n\n${NORMAL}"

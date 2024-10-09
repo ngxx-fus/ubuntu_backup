@@ -32,7 +32,7 @@ printf "\n\n"
 printf "${LIGHT_YELLOW}\nAnnouncement:${NORMAL}"
 printf "\n$(cat ./resources/Announcement)\n"
 
-printf "${RED_LIGHT}m\nInstall the build dependencies:\n${NORMAL}"
+printf "${LIGHT_RED}m\nInstall the build dependencies:\n${NORMAL}"
 yes_or_no;
 
 printf "\n${LIGHT_YELLOW}Installing \e[1mbc bison flex libssl-dev make libc6-dev libncurses5-dev${NORMAL}\n"
@@ -80,6 +80,7 @@ make ARCH=arm64 CROSS_COMPILE=aarch64-linux-gnu- bcm2711_defconfig
 make ARCH=arm64 CROSS_COMPILE=aarch64-linux-gnu- menuconfig
 
 printf "${LIGHT_YELLOW}Wait 5-seconds before starting ${BOLD}build kernel${NORMAL}\n"
+
 CORES=4
 printf "${LIGHT_YELLOW}CORES=$CORES${NORMAL}\n"
 

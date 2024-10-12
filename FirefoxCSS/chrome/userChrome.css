@@ -94,7 +94,9 @@
 
 
 /* URL bar icons */
-#reload-button,
+#reload-button{
+  visibility: flex !important;
+}
 #identity-permission-box,
 #star-button-box,
 #identity-icon-box,

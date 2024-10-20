@@ -1,5 +1,5 @@
 #################### alias ###################
-alias ll='ls -alF'
+alias ll='ls -alFt'
 alias la='ls -A'
 alias l='ls -CF'
 alias linuxdownloads='cd /mnt/sda2/LINUX_DOWNLOADS'
@@ -12,7 +12,7 @@ alias clone='git clone'
 alias push='git push'
 alias addall='git add -A'
 alias commit='git commit'
-alias commit_msg='git commit -m {$0}'
+alias commit_msg='git commit -m {$1}'
 alias downloads="cd ~/Downloads";
 alias desktop="cd ~/Desktop";
 alias nanobashrc="sudo nano ~/.bashrc"

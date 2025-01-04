@@ -114,8 +114,10 @@ sshpass -p "$password" sudo apt-get install gnome-sushi -y
 
 ###### extension manager #####
 printf "\n\e[96mInstall exntension-manager...\e[0m\n"
-sshpass -p "$password" sudo apt install gnome-shell-extension-manager -y
-
+sshpass -p "$password" sudo add-apt-repository ppa:gnome-shell-extensions/ppa  -y
+sshpass -p "$password" sudo apt update  -y
+sshpass -p "$password" sudo apt upgrade  -y
+sshpass -p "$password" sudo apt install gnome-shell-extension-manager  -y
 ########## flatpak ###########
 printf "\n\e[96mInstall flatpak...\e[0m\n"
 sshpass -p "$password" sudo apt install flatpak -y

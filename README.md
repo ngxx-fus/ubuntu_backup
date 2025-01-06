@@ -5,7 +5,7 @@ Run ```ubuntu_backup.sh```
 
 1.
 ```
-  SH_URL="https://raw.githubusercontent.com/ngxx-fus/ubuntu_backup/refs/heads/main/ubuntu_install.sh"
+  SH_URL="https://raw.githubusercontent.com/ngxx-fus/ubuntu_backup/refs/heads/main/ubuntu_backup.sh"
 ```
 2.
 ```

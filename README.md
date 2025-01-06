@@ -9,5 +9,5 @@ Run ```ubuntu_backup.sh```
 ```
 2.
 ```
-  bash < (curl -s $SH_URL)
+  bash <(curl -s "$SH_URL")
 ```

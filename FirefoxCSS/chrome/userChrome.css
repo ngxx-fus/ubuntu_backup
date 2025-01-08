@@ -48,6 +48,11 @@
 
 
 /*------------------------------------------------------------------- MENU BUTTON ----------------------------------------------------------------------*/
+
+#urlbar *,
+#FindToolbar *,
+#search-container * { font-size:11pt !important; }
+
 #PanelUI-button {
   -moz-box-ordinal-group: 0 !important;
   order: -2 !important;
@@ -58,9 +63,7 @@
 /* Window control buttons (min, resize and close) */
 .titlebar-buttonbox-container {
   display: flex !important;
-  margin-right: 12px !important;
-  
- 
+  margin-left: 12px !important;
 }
 
 
@@ -88,15 +91,14 @@
   display: none !important;
 }
 
-
+/* Remove duplicated window control buttons*/ 
+#nav-bar .titlebar-buttonbox{display: none !important
+}
 
 /* ----------------------------------------------------------------- END element visibility section ------------------------------------------------------------- */
 
 
 /* URL bar icons */
-#reload-button{
-  visibility: flex !important;
-}
 #identity-permission-box,
 #star-button-box,
 #identity-icon-box,
@@ -106,6 +108,10 @@
 #translations-button
 {
   display: none !important;
+}
+
+#reload-button{
+  display: flex !important;
 }
 
 /* "This time search with:..." */

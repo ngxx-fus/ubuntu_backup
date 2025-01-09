@@ -1,7 +1,6 @@
-## :v
+## Abstract
 Bcz I usually re-install my ubuntu, so i need a script to install all app i need. OVER!
-## quack quack
-Run ```ubuntu_backup.sh```
+## Ubuntu Initializing
 1. Clone the repo
 2. Open the script then take a look before run 🖕
 ```

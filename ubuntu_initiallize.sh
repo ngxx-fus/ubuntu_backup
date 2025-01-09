@@ -159,6 +159,26 @@ printf "\n${LIGHT_CYAN}Copying custom fonts ...${NORM}\n"
 yes_or_no; if [ $? -eq 1 ]; then
 	sshpass -p "$password" sudo cp -rf ./fonts /usr/share/fonts/truetype
 fi
+
+############## create soft link##############################
+printf "\n${LIGHT_CYAN}Creating soft link for Downloads, Pictures, ...${NORM}"
+printf "\nMake sure that the external target is at \`/mnt/sda1/*\`!\n"
+yes_or_no; if [ $? -eq 1 ]; then
+
+	printf "\n Linking (soft) \`~/Downloads\` to \`/mnt/sda1/Downloads\`"
+	sshpass -p "$password" sudo rm -d ~/Downloads
+	sshpass -p "$password" sudo ln -s /mnt/sda1/Downloads ~/Downloads
+
+	printf "\n Linking (soft) \`~/Pictures\` to \`/mnt/sda1/PIC\`"
+	sshpass -p "$password" sudo rm -d ~/Pictures
+	sshpass -p "$password" sudo ln -s /mnt/sda1/PIC ~/Pictures
+
+	printf "\n Linking (soft) \`~/Documents\` to \`/mnt/sda1/DOC\`"
+	sshpass -p "$password" sudo rm -d ~/Documents
+	sshpass -p "$password" sudo ln -s /mnt/sda1/DOC ~/Documents
+
+fi
+
 ############## insert alias script ##########################
 printf "\n${LIGHT_CYAN}Adding Initial_Script alias ~/.bashrc${NORM}\n"
 yes_or_no; if [ $? -eq 1 ]; then

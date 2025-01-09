@@ -31,10 +31,16 @@ printf "\e[33mEnter your password: ${NORM}"
 read -s password
 
 ############## Neofetch #####################################
-printf "\nSystem print informations via neofetch\n"
+printf "\n${LIGHT_CYAN}System print informations via neofetch${NORM}\n"
 sshpass -p "$password"  sudo neofetch
 printf "\e[33m\nContinue? y/n ${NORM}"
 yes_or_no; if [ $? -eq 0 ]; then exit 0; fi
+
+############## Neofetch #####################################
+printf "\n${LIGHT_CYAN}Installing neovim...${NORM}\n"
+yes_or_no; if [ $? -eq 0 ]; then 
+	sshpass -p "$password"  sudo apt install neovim
+fi
 
 ############## Update, Upgrade system #######################
 printf "\e[92m\nRun: ${BOLD} update, upgrade${NORMAL}\n"
@@ -43,10 +49,7 @@ yes_or_no; if [ $? -eq 1 ]; then
 	sshpass -p "$password" sudo apt upgrade -y
 fi
 
-############## gedit ########################################
-#printf "\ne[96mInstall gedit...${NORM}\n"
-#sshpass -p "$password" sudo snap install gedit
-
+############## git, gh ######################################
 printf "\n${LIGHT_CYAN}Install git, gh${NORM}\n"
 yes_or_no; if [ $? -eq 1 ]; then
 	sshpass -p "$password" sudo apt install git -y

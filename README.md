@@ -2,12 +2,12 @@
 Bcz I usually re-install my ubuntu, so i need a script to install all app i need. OVER!
 ## quack quack
 Run ```ubuntu_backup.sh```
-
-1.
+1. Clone the repo
+2. Open the script then take a look before run 🖕
 ```
-  SH_URL="https://raw.githubusercontent.com/ngxx-fus/ubuntu_backup/refs/heads/main/ubuntu_backup.sh"
+  git clone https://github.com/ngxx-fus/ubuntu_backup.git
 ```
-2.
+3. Run the script ✈️
 ```
-  bash <(curl -s "$SH_URL")
+  ./ubuntu_initialize.sh
 ```

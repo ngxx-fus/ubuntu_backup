@@ -1,5 +1,5 @@
-########## user alias ############
 
+# User alias
 alias ll='ls -alFt'
 alias la='ls -A'
 alias l='ls -CF'
@@ -7,13 +7,17 @@ alias internal_downloads='cd ~/Downloads'
 alias desktop='cd ~/Desktop'
 alias tmp='cd /tmp'
 alias downloads='cd /mnt/sda2/linux_downloads'
-alias clone='git clone'
-alias push='git push'
-alias addall='git add -A'
-alias commit='git commit'
-alias commitmsg='git commit -m '
 alias desktop="cd ~/Desktop"
 alias nanobashrc="sudo nano ~/.bashrc"
 alias bashrc="vim ~/.bashrc"
 alias update="sudo apt update"
 alias upgrade="sudo apt upgrade"
+
+alias clone='git clone '
+alias push='git push '
+alias pull='git pull '
+alias addall='git add -Av '
+alias commit='git commit '
+alias merge='git merge '
+alias commitmsg='git commit -m '
+alias checkout='git checkout '

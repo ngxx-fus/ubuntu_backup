@@ -2,12 +2,14 @@
 
 ## @file setup_dev_env.sh
 ## @brief Automated environment setup script.
-## @details Generates color/alias config files, installs packages, PlatformIO, and Doxygen.
+## @details Generates color/alias config files, installs packages, PlatformIO, ESP-IDF, Doxygen, and Neovim Config.
 ##          Updates .bashrc to source the generated configurations.
+##          Ensures execution happens in HOME and returns to original dir.
 
 SHELLRC="$HOME/.bashrc"
 COLOR_FILE="$HOME/.shell_colors.sh"
 ALIAS_FILE="$HOME/.user_aliases.sh"
+ESP_DIR="$HOME/esp"
 
 ## @brief Helper function to generate the color file
 ## @details Creates ~/.shell_colors.sh if it doesn't exist using the provided content.
@@ -18,59 +20,17 @@ generate_color_file() {
         echo "[INFO] Generating $COLOR_FILE..."
         cat << 'EOF' > "$COLOR_FILE"
 #! /bin/sh
-
-# NOTE:
-# You can mix [1] and [2] (or [1] and [3])
-# But can NOT mix [2] and [3] bcz it will overwrite.
-
 ####### [1] TEXT EFFECT #######
 BOLD="\033[1m"
-FAINT="\033[2m"
-ITALIC="\033[3m"
-UNDERLINED="\033[4m"
-
 ####### [2] TEXT COLOR #######
-BLACK="\033[30m"
-RED="\033[31m"
 GREEN="\033[32m"
 YELLOW="\033[33m"
-BLUE="\033[34m"
-MAGENTA="\033[35m"
 CYAN="\033[36m"
-LIGHT_GRAY="\033[37m"
-GRAY="\033[90m"
-LIGHT_RED="\033[91m"
-LIGHT_GREEN="\033[92m"
-LIGHT_YELLOW="\033[93m"
-LIGHT_BLUE="\033[94m"
-LIGHT_MAGENTA="\033[95m"
-LIGHT_CYAN="\033[96m"
-WHITE="\033[97m"
-
-####### [3] BACKGROUND COLOR #######
-BG_BLACK="\033[40m"
-BG_RED="\033[41m"
-BG_GREEN="\033[42m"
-BG_YELLOW="\033[43m"
-BG_BLUE="\033[44m"
-BG_MAGENTA="\033[45m"
-BG_CYAN="\033[46m"
-BG_LIGHT_GRAY="\033[47m"
-BG_GRAY="\033[100m"
-BG_LIGHT_RED="\033[101m"
-BG_LIGHT_GREEN="\033[102m"
-BG_LIGHT_YELLOW="\033[103m"
-BG_LIGHT_BLUE="\033[104m"
-BG_LIGHT_MAGENTA="\033[105m"
-BG_LIGHT_CYAN="\033[106m"
-BG_WHITE="\033[107m"
-
+RED="\033[31m"
 ####### RESET #######
 NORMAL="\033[0m"
-NORM="\033[0m"
 ENDCOLOR="\033[0m"
 EOF
-        # Give execution permission
         chmod +x "$COLOR_FILE"
         echo "[OK] Generated $COLOR_FILE"
     fi
@@ -110,9 +70,12 @@ alias push='git push '
 alias pull='git pull '
 alias addall='git add -Av '
 alias commit='git commit '
-alias merge='git merge '
-alias commitmsg='git commit -m '
-alias checkout='git checkout '
+
+# ESP-IDF Shortcut
+# Usage: type 'init_idf' in terminal to load ESP-IDF environment vars for that session
+alias init_idf='. $HOME/esp/esp-idf/export.sh'
+alias get_idf='. $HOME/esp/esp-idf/export.sh'
+alias idf_init='. $HOME/esp/esp-idf/export.sh'
 EOF
         chmod +x "$ALIAS_FILE"
         echo "[OK] Generated $ALIAS_FILE"
@@ -123,10 +86,23 @@ EOF
 # MAIN EXECUTION
 # ==============================================================================
 
+# [STEP 0] SAVE LOCATION & GO HOME
+echo "----------------------------------------------------------------"
+echo "[INIT] Saving current location..."
+ORIGINAL_DIR=$(pwd)
+echo "[INIT] Saved: $ORIGINAL_DIR"
+
+echo "[INIT] Jumping to HOME directory (~)..."
+cd ~ || { echo "Failed to go to Home directory"; exit 1; }
+echo "[INIT] Now working at: $(pwd)"
+echo "----------------------------------------------------------------"
+
+# ------------------------------------------------------------------------------
+
 echo "## 1. Setup Colors and Core Packages"
 generate_color_file
 
-# Source the colors immediately so we can use them in this script if needed
+# Source the colors immediately
 if [ -f "$COLOR_FILE" ]; then
     source "$COLOR_FILE"
     echo -e "${GREEN}[MSG] Colors loaded successfully.${ENDCOLOR}"
@@ -140,30 +116,73 @@ sudo apt-get install -y duf neofetch neovim make curl wget git
 
 # ==============================================================================
 
-echo -e "${BOLD}## 2. Install PlatformIO runtime and bin-utils${ENDCOLOR}"
-# Install python3-venv (needed for valid pip installations) and binutils
+echo -e "${BOLD}## 2. Setup Neovim Configuration${ENDCOLOR}"
+NVIM_CONFIG_DIR="$HOME/.config/nvim"
+NVIM_REPO="https://github.com/ngxx-fus/neovim-conf.git"
+
+if [ -d "$NVIM_CONFIG_DIR" ]; then
+    echo -e "${YELLOW}[WARN] Directory $NVIM_CONFIG_DIR already exists.${ENDCOLOR}"
+    echo -e "${YELLOW}[ABORT] Skipping Neovim config clone to preserve existing setup.${ENDCOLOR}"
+else
+    echo "[ACTION] Cloning Neovim config from $NVIM_REPO..."
+    # Ensure .config exists
+    mkdir -p "$HOME/.config"
+    git clone "$NVIM_REPO" "$NVIM_CONFIG_DIR"
+    
+    if [ $? -eq 0 ]; then
+        echo -e "${GREEN}[OK] Neovim configuration installed successfully.${ENDCOLOR}"
+    else
+        echo -e "${RED}[ERR] Failed to clone Neovim configuration.${ENDCOLOR}"
+    fi
+fi
+
+# ==============================================================================
+
+echo -e "${BOLD}## 3. Install PlatformIO runtime and bin-utils${ENDCOLOR}"
 sudo apt-get install -y python3-venv binutils python3-pip
 
 echo "[ACTION] Installing PlatformIO Core via pip..."
-# Using python3 -m pip is safer than bare 'pip'
 python3 -m pip install -U platformio
 
-# Add local bin to PATH for this session so we can check version later
+# Add local bin to PATH for this session
 export PATH=$PATH:$HOME/.local/bin
 
 # ==============================================================================
 
-echo -e "${BOLD}## 3. Install documentation tools${ENDCOLOR}"
+echo -e "${BOLD}## 4. Install ESP-IDF (Espressif IoT Development Framework)${ENDCOLOR}"
+
+# 4.1 Install Prerequisites for ESP-IDF
+echo "[ACTION] Installing ESP-IDF dependencies (cmake, ninja, usb-libs)..."
+sudo apt-get install -y git wget flex bison gperf python3 python3-pip python3-venv \
+    cmake ninja-build ccache libffi-dev libssl-dev dfu-util libusb-1.0-0
+
+# 4.2 Create directory and Clone
+if [ -d "$ESP_DIR/esp-idf" ]; then
+    echo -e "${YELLOW}[INFO] ESP-IDF already exists at $ESP_DIR/esp-idf. Skipping clone.${ENDCOLOR}"
+else
+    echo "[ACTION] Creating directory $ESP_DIR and cloning ESP-IDF..."
+    mkdir -p "$ESP_DIR"
+    # Clone recursive is important for submodules
+    git clone --recursive https://github.com/espressif/esp-idf.git "$ESP_DIR/esp-idf"
+    
+    echo "[ACTION] Running ESP-IDF install script (this may take a while)..."
+    # Run the install script for all targets (esp32, esp32s3, etc.)
+    "$ESP_DIR/esp-idf/install.sh"
+    
+    echo -e "${GREEN}[OK] ESP-IDF installed successfully.${ENDCOLOR}"
+fi
+
+# ==============================================================================
+
+echo -e "${BOLD}## 5. Install documentation tools${ENDCOLOR}"
 echo "[ACTION] Installing Doxygen and Graphviz..."
 sudo apt-get install -y doxygen graphviz
 
 # ==============================================================================
 
-echo -e "${BOLD}## 4. Setup Aliases and Configure Shell${ENDCOLOR}"
+echo -e "${BOLD}## 6. Setup Aliases and Configure Shell${ENDCOLOR}"
 generate_alias_file
 
-# Check if we need to add sourcing to .bashrc
-# We look for a unique marker to avoid adding it twice
 MARKER="### AUTO-GENERATED SETUP_DEV_ENV START"
 
 if grep -q "$MARKER" "$SHELLRC"; then
@@ -191,5 +210,13 @@ EOF
 fi
 
 # ==============================================================================
-echo -e "${GREEN}${BOLD}## Setup Complete!${ENDCOLOR}"
+# [STEP FINAL] RETURN TO ORIGINAL LOCATION
+echo "----------------------------------------------------------------"
+echo -e "${BOLD}[FINISH] Setup Complete!${ENDCOLOR}"
+echo -e "${BOLD}[ACTION] Returning to original directory...${ENDCOLOR}"
+cd "$ORIGINAL_DIR" || echo "Could not return to $ORIGINAL_DIR"
+echo "[INFO] Back at: $(pwd)"
+echo "----------------------------------------------------------------"
+
 echo -e "Please run: ${CYAN}source $SHELLRC${ENDCOLOR} or restart your terminal."
+echo -e "To use ESP-IDF, type: ${CYAN}init_idf${ENDCOLOR}"

@@ -31,7 +31,7 @@ export SETUP_VALID_FILE_CHECK_FILE_EN=0     # temporarily not implemented/active
 
 export SETUP_APT_INSTALL_LIST_EN=1
 export SETUP_APT_INSTALL_LIST=(
-    "wget" "curl" "htop" "neofetch" "btop" "tree" "duf" "tmux" "zsh"
+    "wget" "curl" "htop" "neofetch" "btop" "tree" "duf" "tmux" "zsh" "git"
 )
 
 # ===========================================================================

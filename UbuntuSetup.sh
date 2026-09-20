@@ -18,7 +18,7 @@ set -u  # Treat unset variables as error
 # Global config flags (set to 1 to enable, 0 to skip)
 # ===========================================================================
 export SETUP_OHMYZSH_EN=1
-export SETUP_NVIM_EN=0
+export SETUP_NVIM_EN=1
 export SETUP_NVIM_PREREQUISITES_EN=1        # only works if SETUP_NVIM_EN=1
 export SETUP_ADD_APT_REPO_EN=1
 export SETUP_USER_ALIASES_EN=1
@@ -44,7 +44,7 @@ export NIVM_INSTALL_DIRNAME="nvim-linux-x86_64"
 export BACKGROUND_IMG_FILENAME="IMG_4273.JPG"
 export CLANGD_VERSION="22.1.6"
 export CLANGD_ZIP_FILENAME="clangd-linux-22.1.6.zip"
-export CLANGD_EXTRACTED_FILENAME="clangd-linux-22.1.6"
+export CLANGD_EXTRACTED_FILENAME="clangd_22.1.6"
 
 export FOLDER_CURRENT=$(pwd)
 export FOLDER_HOME="/home/fus"

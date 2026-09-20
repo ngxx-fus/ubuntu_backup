@@ -31,7 +31,7 @@ export SETUP_VALID_FILE_CHECK_FILE_EN=0     # temporarily not implemented/active
 
 export SETUP_APT_INSTALL_LIST_EN=1
 export SETUP_APT_INSTALL_LIST=(
-    "btop" "tree" "duf" "tmux"
+    "wget" "curl" "htop" "neofetch" "btop" "tree" "duf" "tmux"
 )
 
 # ===========================================================================
@@ -156,19 +156,19 @@ AppendIfNotExist() {
 # GetBaseName <path>
 # Extract base filename located after the last slash and before the last dot.
 GetBaseName() {
-    path="$1"
+    local path="$1"
 
     if [ -z "$path" ] || [ "${path%[/\\]}" != "$path" ]; then
         return 1
     fi
 
-    filename="${path##*[/\\]}"
+    local filename="${path##*[/\\]}"
 
     if [ "$filename" = "${filename%.*}" ]; then
         return 1
     fi
 
-    basename="${filename%.*}"
+    local basename="${filename%.*}"
     printf '%s\n' "$basename"
 
     return 0
@@ -266,7 +266,7 @@ fi
 if [[ "${SETUP_NVIM_EN}" == "1" ]]; then
     echo ">>> Installing Neovim (${NVIM_VERSION})..."
     
-    local final_url="${URL_NVIM_DOWNLOAD}"
+    final_url="${URL_NVIM_DOWNLOAD}"
     
     if ! PerformConnectionCheck "${final_url}"; then
         echo "[ERR] Failed to connect to ${final_url}. Skipping Neovim."
@@ -371,7 +371,7 @@ if [[ "${SETUP_OHMYZSH_EN}" == "1" ]]; then
     fi
 
     # --- Install Oh-My-Zsh safely ---
-    local final_url="${URL_OHMYZSH_INSTALL_SCRIPT}"
+    final_url="${URL_OHMYZSH_INSTALL_SCRIPT}"
     if ! PerformConnectionCheck "${final_url}"; then
         echo "[ERR] Failed to connect to ${final_url}. Skipping Oh-My-Zsh installer."
     elif ! PerformDownloadCheck "${final_url}"; then
@@ -405,7 +405,7 @@ if [[ "${SETUP_OHMYZSH_EN}" == "1" ]]; then
         echo ">>> Installing ngxxfus theme..."
         MakeThisDirExist "${FOLDER_OMZ_THEMES}"
 
-        local theme_url="${URL_NGXXFUS_THEME}"
+        theme_url="${URL_NGXXFUS_THEME}"
         if ! PerformConnectionCheck "${theme_url}"; then
             echo "[ERR] Failed to connect to ${theme_url}. Skipping theme setup."
         elif ! PerformDownloadCheck "${theme_url}"; then
@@ -442,7 +442,7 @@ if [[ "${SETUP_USER_ALIASES_EN}" == "1" ]]; then
 
     MakeThisDirExist "${FOLDER_FUS}"
 
-    local final_url="${URL_USER_ALIASES}"
+    final_url="${URL_USER_ALIASES}"
     if ! PerformConnectionCheck "${final_url}"; then
         echo "[ERR] Failed to connect to ${final_url}. Skipping user aliases."
     elif ! PerformDownloadCheck "${final_url}"; then
@@ -469,7 +469,7 @@ if [[ "${SETUP_BACKGROUND_EN}" == "1" ]]; then
     MakeThisDirExist "${FOLDER_BACKGROUND}"
     cd "${FOLDER_DOWNLOADS}"
 
-    local final_url="${URL_BACKGROUND_IMG}"
+    final_url="${URL_BACKGROUND_IMG}"
     if ! PerformConnectionCheck "${final_url}"; then
         echo "[ERR] Failed to connect to ${final_url}. Skipping background image."
     elif ! PerformDownloadCheck "${final_url}"; then
@@ -518,7 +518,7 @@ if [[ "${SETUP_CLANGD}" == "1" ]]; then
 
     cd "${FOLDER_DOWNLOADS}"
 
-    local final_url="${URL_CLANGD}"
+    final_url="${URL_CLANGD}"
     if ! PerformConnectionCheck "${final_url}"; then
         echo "[ERR] Failed to connect to ${final_url}. Skipping Clangd."
     elif ! PerformDownloadCheck "${final_url}"; then

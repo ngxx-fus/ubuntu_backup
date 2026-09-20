@@ -1,4 +1,3 @@
-
 #!/usr/bin/env bash
 ###############################################################################
 # Setup script for personal workspace (Ubuntu-based)
@@ -9,7 +8,7 @@
 # - Install Clangd
 # - Install custom APT packages
 #
-# Usage: zsh setup_personal.sh
+# Usage: bash setup_personal.sh
 ###############################################################################
 
 set -e  # Exit immediately on error
@@ -73,6 +72,37 @@ export URL_ZSH_SYNTAX_HIGHLIGHTING_REPO="https://github.com/zsh-users/zsh-syntax
 export URL_ZSH_AUTOSUGGESTIONS_REPO="https://github.com/zsh-users/zsh-autosuggestions.git"
 export URL_ZSH_Z_REPO="https://github.com/agkozak/zsh-z.git"
 export URL_CLANGD="https://github.com/clangd/clangd/releases/download/${CLANGD_VERSION}/${CLANGD_ZIP_FILENAME}"
+
+# ===========================================================================
+# User Confirmation Prompt
+# ===========================================================================
+echo "================================================================================"
+echo "                     INSTALLATION PATH CONFIGURATION CHECK                      "
+echo "================================================================================"
+echo " Please verify the following target directories and paths:"
+echo ""
+echo "  [User Home]         : ${FOLDER_HOME}"
+echo "  [Workspace]         : ${FOLDER_WORKSPACE}"
+echo "  [Downloads]         : ${FOLDER_DOWNLOADS}"
+echo "  [Zsh RC]            : ${FOLDER_DOT_ZSHRC}"
+echo "  [Oh-My-Zsh]         : ${FOLDER_DOT_OH_MY_ZSH}"
+echo "  [Neovim Config]     : ${FOLDER_NVIM_CONFIG}"
+echo "  [Custom Assets]     : ${FOLDER_FUS}"
+echo "  [Wallpapers]        : ${FOLDER_BACKGROUND}"
+echo "  [User Aliases File] : ${FILE_USER_ALIASES}"
+echo "  [Clangd Target]     : ${FOLDER_CLANGD}"
+echo "================================================================================"
+read -r -p "Do you want to continue with these paths? [y/N]: " user_choice
+
+case "${user_choice}" in
+    [yY]|[yY][eE][sS])
+        echo "[INF] Paths confirmed. Proceeding with setup..."
+        ;;
+    *)
+        echo "[WARN] Setup cancelled by user. Exiting."
+        exit 0
+        ;;
+esac
 
 # ===========================================================================
 # Helper functions

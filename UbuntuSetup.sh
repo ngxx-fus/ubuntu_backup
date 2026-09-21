@@ -7,6 +7,7 @@
 # - Setup desktop background wallpaper
 # - Install Clangd
 # - Install custom APT packages
+# - Install IBus Bamboo
 #
 # Usage: bash setup_personal.sh
 ###############################################################################
@@ -24,7 +25,8 @@ export SETUP_ADD_APT_REPO_EN=1
 export SETUP_USER_ALIASES_EN=1
 export SETUP_BACKGROUND_EN=1
 export SETUP_AUTO_SET_BACKGROUND_EN=0       # only works if SETUP_BACKGROUND_EN=1
-export SETUP_CLANGD=1
+export SETUP_CLANGD_EN=1
+export SETUP_BAMBOO_IBUS_EN=1
 
 export SETUP_CONN_CHECK_EN=1
 export SETUP_VALID_FILE_CHECK_FILE_EN=0     # temporarily not implemented/active
@@ -513,7 +515,7 @@ fi
 # ===========================================================================
 # Install Clangd
 # ===========================================================================
-if [[ "${SETUP_CLANGD}" == "1" ]]; then
+if [[ "${SETUP_CLANGD_EN}" == "1" ]]; then
     echo ">>> Installing Clangd (${CLANGD_VERSION})..."
 
     cd "${FOLDER_DOWNLOADS}"
@@ -559,6 +561,34 @@ if [[ "${SETUP_CLANGD}" == "1" ]]; then
 
     # Return execution context back to starting directory
     cd "${FOLDER_CURRENT}"
+fi
+
+# ===========================================================================
+# Install IBus Bamboo
+# ===========================================================================
+if [[ "${SETUP_BAMBOO_IBUS_EN}" == "1" ]]; then
+    echo ">>> Installing IBus Bamboo..."
+
+    # Safety check: Remove malformed antigravity list if it exists to prevent apt update from failing
+    if [ -f /etc/apt/sources.list.d/antigravity.list ]; then
+        echo "[WARN] Removing potentially broken antigravity.list to ensure apt update works..."
+        sudo rm -f /etc/apt/sources.list.d/antigravity.list
+    fi
+
+    export DEBIAN_FRONTEND=noninteractive
+    echo "[INF] Adding bamboo-engine PPA..."
+    sudo add-apt-repository ppa:bamboo-engine/ibus-bamboo -y
+
+    echo "[INF] Updating apt repositories..."
+    sudo apt update -y
+
+    echo "[INF] Installing ibus-bamboo..."
+    sudo apt install -y ibus-bamboo
+
+    echo "[INF] Restarting IBus daemon..."
+    ibus restart || true
+
+    echo ">>> IBus Bamboo installed successfully."
 fi
 
 # ===========================================================================
